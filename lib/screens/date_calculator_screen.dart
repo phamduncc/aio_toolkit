@@ -30,7 +30,7 @@ class _DateCalculatorScreenState extends State<DateCalculatorScreen>
   Widget build(BuildContext context) {
     final color = AppTheme.toolColors['date']!;
     return ToolScaffold(
-      title: 'Tính ngày',
+      title: 'Date Calculator',
       color: color,
       icon: Icons.calendar_today_rounded,
       child: Column(
@@ -43,9 +43,9 @@ class _DateCalculatorScreenState extends State<DateCalculatorScreen>
             labelStyle:
                 const TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
             tabs: const [
-              Tab(text: 'Khoảng cách'),
-              Tab(text: 'Cộng/trừ ngày'),
-              Tab(text: 'Ngày làm việc'),
+              Tab(text: 'Difference'),
+              Tab(text: 'Add/Subtract'),
+              Tab(text: 'Workdays'),
             ],
           ),
           Expanded(
@@ -115,7 +115,7 @@ class _DateDiffTabState extends State<_DateDiffTab> {
             child: Column(
               children: [
                 _DatePicker(
-                  label: 'Ngày bắt đầu',
+                  label: 'Start date',
                   date: _from,
                   color: color,
                   onTap: () => _pickDate(true),
@@ -127,7 +127,7 @@ class _DateDiffTabState extends State<_DateDiffTab> {
                       color: AppTheme.textSecondary),
                 ),
                 _DatePicker(
-                  label: 'Ngày kết thúc',
+                  label: 'End date',
                   date: _to,
                   color: color,
                   onTap: () => _pickDate(false),
@@ -139,11 +139,11 @@ class _DateDiffTabState extends State<_DateDiffTab> {
           const SizedBox(height: 16),
           Row(
             children: [
-              _StatBox(label: 'Ngày', value: '$_days', color: color),
+              _StatBox(label: 'Days', value: '$_days', color: color),
               const SizedBox(width: 10),
-              _StatBox(label: 'Tuần', value: '$_weeks', color: color),
+              _StatBox(label: 'Weeks', value: '$_weeks', color: color),
               const SizedBox(width: 10),
-              _StatBox(label: 'Tháng', value: '~$_months', color: color),
+              _StatBox(label: 'Months', value: '~$_months', color: color),
             ],
           ),
           const SizedBox(height: 16),
@@ -165,7 +165,7 @@ class _DateDiffTabState extends State<_DateDiffTab> {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  '$_days ngày | $_weeks tuần $_days % 7 ngày',
+                  '$_days days | $_weeks weeks $_days % 7 days',
                   style: TextStyle(
                       fontSize: 15, fontWeight: FontWeight.w700, color: color),
                   textAlign: TextAlign.center,
@@ -185,11 +185,11 @@ class _DateDiffTabState extends State<_DateDiffTab> {
   }
 
   String _getDayLabel() {
-    if (_days == 0) return 'Cùng một ngày';
-    if (_days < 7) return 'Chưa đầy 1 tuần';
-    if (_days < 30) return 'Khoảng ${_days ~/ 7} tuần';
-    if (_days < 365) return 'Khoảng ${_days ~/ 30} tháng';
-    return 'Khoảng ${(_days / 365).toStringAsFixed(1)} năm';
+    if (_days == 0) return 'Same day';
+    if (_days < 7) return 'Less than 1 week';
+    if (_days < 30) return 'About ${_days ~/ 7} weeks';
+    if (_days < 365) return 'About ${_days ~/ 30} months';
+    return 'About ${(_days / 365).toStringAsFixed(1)} years';
   }
 }
 
@@ -249,7 +249,7 @@ class _DateAddTabState extends State<_DateAddTab> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Ngày gốc',
+                const Text('Base date',
                     style:
                         TextStyle(fontSize: 13, color: AppTheme.textSecondary)),
                 const SizedBox(height: 8),
@@ -283,13 +283,13 @@ class _DateAddTabState extends State<_DateAddTab> {
                 Row(
                   children: [
                     _OpButton(
-                        label: '+ Cộng',
+                        label: '+ Add',
                         selected: _isAdd,
                         onTap: () => setState(() => _isAdd = true),
                         color: Colors.green),
                     const SizedBox(width: 10),
                     _OpButton(
-                        label: '- Trừ',
+                        label: '- Subtract',
                         selected: !_isAdd,
                         onTap: () => setState(() => _isAdd = false),
                         color: Colors.red),
@@ -301,19 +301,19 @@ class _DateAddTabState extends State<_DateAddTab> {
                     Expanded(
                         child: _NumInput(
                             ctrl: _daysCtrl,
-                            label: 'Ngày',
+                            label: 'Days',
                             onChanged: (_) => setState(() {}))),
                     const SizedBox(width: 8),
                     Expanded(
                         child: _NumInput(
                             ctrl: _monthsCtrl,
-                            label: 'Tháng',
+                            label: 'Months',
                             onChanged: (_) => setState(() {}))),
                     const SizedBox(width: 8),
                     Expanded(
                         child: _NumInput(
                             ctrl: _yearsCtrl,
-                            label: 'Năm',
+                            label: 'Years',
                             onChanged: (_) => setState(() {}))),
                   ],
                 ),
@@ -331,7 +331,7 @@ class _DateAddTabState extends State<_DateAddTab> {
             ),
             child: Column(
               children: [
-                const Text('Kết quả',
+                const Text('Result',
                     style:
                         TextStyle(fontSize: 12, color: AppTheme.textSecondary)),
                 const SizedBox(height: 8),
@@ -342,7 +342,7 @@ class _DateAddTabState extends State<_DateAddTab> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  DateFormat('EEEE', 'vi_VN').format(resultDate),
+                  DateFormat('EEEE', 'en_US').format(resultDate),
                   style: TextStyle(fontSize: 14, color: color.withAlpha(180)),
                 ),
               ],
@@ -415,7 +415,7 @@ class _WorkdaysTabState extends State<_WorkdaysTab> {
             child: Column(
               children: [
                 _DatePicker(
-                    label: 'Từ ngày',
+                    label: 'From date',
                     date: _from,
                     color: color,
                     onTap: () => _pick(true),
@@ -425,7 +425,7 @@ class _WorkdaysTabState extends State<_WorkdaysTab> {
                     child: Icon(Icons.arrow_downward_rounded,
                         color: AppTheme.textSecondary)),
                 _DatePicker(
-                    label: 'Đến ngày',
+                    label: 'To date',
                     date: _to,
                     color: color,
                     onTap: () => _pick(false),
@@ -438,7 +438,7 @@ class _WorkdaysTabState extends State<_WorkdaysTab> {
                       onChanged: (v) => setState(() => _excludeSat = v!),
                       activeColor: color,
                     ),
-                    const Text('Không tính thứ 7',
+                    const Text('Exclude Saturdays',
                         style: TextStyle(fontSize: 14)),
                   ],
                 ),
@@ -448,15 +448,15 @@ class _WorkdaysTabState extends State<_WorkdaysTab> {
           const SizedBox(height: 16),
           Row(
             children: [
-              _StatBox(label: 'Ngày làm', value: '$_workdays', color: color),
+              _StatBox(label: 'Workdays', value: '$_workdays', color: color),
               const SizedBox(width: 10),
               _StatBox(
-                  label: 'Cuối tuần',
+                  label: 'Weekends',
                   value: '$_weekends',
                   color: Colors.orange),
               const SizedBox(width: 10),
               _StatBox(
-                  label: 'Tổng ngày', value: '$_totalDays', color: Colors.grey),
+                  label: 'Total days', value: '$_totalDays', color: Colors.grey),
             ],
           ),
         ],

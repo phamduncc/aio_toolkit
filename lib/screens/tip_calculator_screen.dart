@@ -22,7 +22,7 @@ class _TipCalculatorScreenState extends State<TipCalculatorScreen> {
   double get _tipPerPerson => _people > 0 ? _tipAmount / _people : 0;
 
   String _fmt(double v) {
-    if (v >= 1000000) return '${(v / 1000000).toStringAsFixed(2)} triệu';
+    if (v >= 1000000) return '${(v / 1000000).toStringAsFixed(2)}M';
     if (v >= 1000) return '${(v / 1000).toStringAsFixed(1)}k';
     return v.toStringAsFixed(0);
   }
@@ -30,7 +30,7 @@ class _TipCalculatorScreenState extends State<TipCalculatorScreen> {
   @override
   Widget build(BuildContext context) {
     return ToolScaffold(
-      title: 'Chia tiền',
+      title: 'Split Bill',
       color: color,
       icon: Icons.receipt_long_rounded,
       child: SingleChildScrollView(
@@ -48,13 +48,13 @@ class _TipCalculatorScreenState extends State<TipCalculatorScreen> {
                     onChanged: (_) => setState(() {}),
                     style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
                     decoration: InputDecoration(
-                      labelText: 'Tổng hóa đơn',
+                      labelText: 'Bill total',
                       prefixText: '₫ ',
                       prefixStyle: TextStyle(color: color, fontWeight: FontWeight.w700, fontSize: 22),
                     ),
                   ),
                   const SizedBox(height: 24),
-                  Text('Tiền tip: ${_tipPercent.toInt()}%',
+                  Text('Tip: ${_tipPercent.toInt()}%',
                       style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
                   const SizedBox(height: 8),
                   SliderTheme(
@@ -97,7 +97,7 @@ class _TipCalculatorScreenState extends State<TipCalculatorScreen> {
                   const SizedBox(height: 24),
                   Row(
                     children: [
-                      const Text('Số người:', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+                      const Text('People:', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
                       const Spacer(),
                       _StepBtn(icon: Icons.remove_rounded, onTap: () { if (_people > 1) setState(() => _people--); }),
                       Padding(
@@ -114,10 +114,10 @@ class _TipCalculatorScreenState extends State<TipCalculatorScreen> {
             if (_bill > 0) ...[
               _ResultGrid(
                 items: [
-                  _ResultItem('Tiền tip', _fmt(_tipAmount), color),
-                  _ResultItem('Tổng cộng', _fmt(_total), color),
-                  _ResultItem('Tip / người', _fmt(_tipPerPerson), Colors.purple),
-                  _ResultItem('Mỗi người trả', _fmt(_perPerson), Colors.green),
+                  _ResultItem('Tip amount', _fmt(_tipAmount), color),
+                  _ResultItem('Grand total', _fmt(_total), color),
+                  _ResultItem('Tip / person', _fmt(_tipPerPerson), Colors.purple),
+                  _ResultItem('Per person', _fmt(_perPerson), Colors.green),
                 ],
               ),
               const SizedBox(height: 16),
@@ -133,7 +133,7 @@ class _TipCalculatorScreenState extends State<TipCalculatorScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Hóa đơn gốc:', style: TextStyle(fontSize: 14)),
+                        const Text('Original bill:', style: TextStyle(fontSize: 14)),
                         Text('₫${_fmt(_bill)}', style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
                       ],
                     ),
@@ -149,7 +149,7 @@ class _TipCalculatorScreenState extends State<TipCalculatorScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('$_people người × ₫${_fmt(_perPerson)}:', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
+                        Text('$_people people × ₫${_fmt(_perPerson)}:', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
                         Text('₫${_fmt(_total)}', style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16, color: color)),
                       ],
                     ),

@@ -31,7 +31,7 @@ class _HashScreenState extends State<HashScreen>
   Widget build(BuildContext context) {
     final color = AppTheme.toolColors['hash']!;
     return ToolScaffold(
-      title: 'Mã hóa Text',
+      title: 'Text Tools',
       color: color,
       icon: Icons.text_fields_rounded,
       child: Column(
@@ -45,8 +45,8 @@ class _HashScreenState extends State<HashScreen>
                 const TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
             tabs: const [
               Tab(text: 'Base64'),
-              Tab(text: 'Đếm văn bản'),
-              Tab(text: 'Biến đổi chữ'),
+              Tab(text: 'Text count'),
+              Tab(text: 'Case transform'),
             ],
           ),
           Expanded(
@@ -105,7 +105,7 @@ class _Base64TabState extends State<_Base64Tab> {
     } catch (_) {
       setState(() {
         _outputCtrl.clear();
-        _error = 'Dữ liệu không hợp lệ';
+        _error = 'Invalid data';
       });
     }
   }
@@ -124,7 +124,7 @@ class _Base64TabState extends State<_Base64Tab> {
     Clipboard.setData(ClipboardData(text: text));
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-          content: Text('Đã sao chép!'), duration: Duration(seconds: 1)),
+          content: Text('Copied!'), duration: Duration(seconds: 1)),
     );
   }
 
@@ -136,7 +136,7 @@ class _Base64TabState extends State<_Base64Tab> {
         children: [
           _TextCard(
             color: color,
-            label: _isEncoding ? 'Text gốc' : 'Base64',
+            label: _isEncoding ? 'Plain text' : 'Base64',
             controller: _inputCtrl,
             onChanged: (_) => _convert(),
             action: IconButton(
@@ -153,7 +153,7 @@ class _Base64TabState extends State<_Base64Tab> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _ModeChip(
-                  label: 'Mã hóa',
+                  label: 'Encode',
                   selected: _isEncoding,
                   color: color,
                   onTap: () {
@@ -173,7 +173,7 @@ class _Base64TabState extends State<_Base64Tab> {
               ),
               const SizedBox(width: 8),
               _ModeChip(
-                  label: 'Giải mã',
+                  label: 'Decode',
                   selected: !_isEncoding,
                   color: color,
                   onTap: () {
@@ -196,7 +196,7 @@ class _Base64TabState extends State<_Base64Tab> {
           else
             _TextCard(
               color: color,
-              label: _isEncoding ? 'Base64' : 'Text gốc',
+              label: _isEncoding ? 'Base64' : 'Plain text',
               controller: _outputCtrl,
               onChanged: null,
               readOnly: true,
@@ -265,7 +265,7 @@ class _TextCountTabState extends State<_TextCountTab> {
               maxLines: 6,
               onChanged: (_) => setState(() {}),
               decoration: InputDecoration(
-                hintText: 'Nhập hoặc dán văn bản vào đây...',
+                hintText: 'Type or paste text here...',
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
                     borderSide: BorderSide.none),
@@ -284,15 +284,15 @@ class _TextCountTabState extends State<_TextCountTab> {
             mainAxisSpacing: 10,
             childAspectRatio: 2.2,
             children: [
-              _StatTile('Ký tự', '$_chars', color, Icons.text_fields_rounded),
-              _StatTile('Ký tự (ko khoảng trắng)', '$_charsNoSpace', color,
+              _StatTile('Characters', '$_chars', color, Icons.text_fields_rounded),
+              _StatTile('Characters (no spaces)', '$_charsNoSpace', color,
                   Icons.abc_rounded),
-              _StatTile('Từ', '$_words', Colors.green, Icons.article_rounded),
-              _StatTile('Câu', '$_sentences', Colors.orange,
+              _StatTile('Words', '$_words', Colors.green, Icons.article_rounded),
+              _StatTile('Sentences', '$_sentences', Colors.orange,
                   Icons.short_text_rounded),
               _StatTile(
-                  'Dòng', '$_lines', Colors.purple, Icons.wrap_text_rounded),
-              _StatTile('Đoạn văn', '$_paragraphs', Colors.teal,
+                  'Lines', '$_lines', Colors.purple, Icons.wrap_text_rounded),
+              _StatTile('Paragraphs', '$_paragraphs', Colors.teal,
                   Icons.subject_rounded),
             ],
           ),
@@ -307,10 +307,10 @@ class _TextCountTabState extends State<_TextCountTab> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  _MiniStat('~${(_words / 200).toStringAsFixed(1)} phút',
-                      'Đọc (200 từ/phút)'),
-                  _MiniStat('~${(_words / 130).toStringAsFixed(1)} phút',
-                      'Nói (130 từ/phút)'),
+                  _MiniStat('~${(_words / 200).toStringAsFixed(1)} min',
+                      'Read (200 wpm)'),
+                  _MiniStat('~${(_words / 130).toStringAsFixed(1)} min',
+                      'Speak (130 wpm)'),
                 ],
               ),
             ),
@@ -383,7 +383,7 @@ class _CaseTabState extends State<_CaseTab> {
               maxLines: 3,
               onChanged: (_) => setState(() {}),
               decoration: InputDecoration(
-                hintText: 'Nhập văn bản...',
+                hintText: 'Enter text...',
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
                     borderSide: BorderSide.none),
@@ -417,7 +417,7 @@ class _CaseTabState extends State<_CaseTab> {
                     Clipboard.setData(ClipboardData(text: item[1] as String));
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                          content: Text('Đã sao chép!'),
+                          content: Text('Copied!'),
                           duration: Duration(seconds: 1)),
                     );
                   },

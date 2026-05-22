@@ -36,12 +36,12 @@ class _BmiScreenState extends State<BmiScreen> {
 
   String get _category {
     if (_bmi == null) return '';
-    if (_bmi! < 18.5) return 'Thiếu cân';
-    if (_bmi! < 25) return 'Bình thường';
-    if (_bmi! < 30) return 'Thừa cân';
-    if (_bmi! < 35) return 'Béo phì độ I';
-    if (_bmi! < 40) return 'Béo phì độ II';
-    return 'Béo phì độ III';
+    if (_bmi! < 18.5) return 'Underweight';
+    if (_bmi! < 25) return 'Normal';
+    if (_bmi! < 30) return 'Overweight';
+    if (_bmi! < 35) return 'Obese Class I';
+    if (_bmi! < 40) return 'Obese Class II';
+    return 'Obese Class III';
   }
 
   Color get _categoryColor {
@@ -54,10 +54,10 @@ class _BmiScreenState extends State<BmiScreen> {
 
   String get _advice {
     if (_bmi == null) return '';
-    if (_bmi! < 18.5) return 'Bạn nên tăng cường dinh dưỡng và tập thể dục đều đặn.';
-    if (_bmi! < 25) return 'Tuyệt vời! Hãy duy trì lối sống lành mạnh này.';
-    if (_bmi! < 30) return 'Nên tăng cường vận động và điều chỉnh chế độ ăn uống.';
-    return 'Hãy tham khảo ý kiến bác sĩ để có kế hoạch giảm cân phù hợp.';
+    if (_bmi! < 18.5) return 'Consider improving nutrition and exercising regularly.';
+    if (_bmi! < 25) return 'Great! Keep maintaining this healthy lifestyle.';
+    if (_bmi! < 30) return 'Try to exercise more and adjust your diet.';
+    return 'Consult a doctor for a suitable weight management plan.';
   }
 
   double get _idealWeightMin {
@@ -77,7 +77,7 @@ class _BmiScreenState extends State<BmiScreen> {
   @override
   Widget build(BuildContext context) {
     return ToolScaffold(
-      title: 'Chỉ số BMI',
+      title: 'BMI Calculator',
       color: color,
       icon: Icons.monitor_weight_outlined,
       child: SingleChildScrollView(
@@ -96,7 +96,7 @@ class _BmiScreenState extends State<BmiScreen> {
                 children: [
                   Row(
                     children: [
-                      const Text('Đơn vị:', style: TextStyle(fontWeight: FontWeight.w600)),
+                      const Text('Units:', style: TextStyle(fontWeight: FontWeight.w600)),
                       const SizedBox(width: 16),
                       _UnitToggle(
                         labels: const ['Metric (kg/cm)', 'Imperial (lb/in)'],
@@ -115,7 +115,7 @@ class _BmiScreenState extends State<BmiScreen> {
                           keyboardType: const TextInputType.numberWithOptions(decimal: true),
                           onChanged: (_) => _calc(),
                           decoration: InputDecoration(
-                            labelText: 'Cân nặng',
+                            labelText: 'Weight',
                             suffixText: _isMetric ? 'kg' : 'lb',
                           ),
                         ),
@@ -127,7 +127,7 @@ class _BmiScreenState extends State<BmiScreen> {
                           keyboardType: const TextInputType.numberWithOptions(decimal: true),
                           onChanged: (_) => _calc(),
                           decoration: InputDecoration(
-                            labelText: 'Chiều cao',
+                            labelText: 'Height',
                             suffixText: _isMetric ? 'cm' : 'in',
                           ),
                         ),
@@ -194,7 +194,7 @@ class _BmiScreenState extends State<BmiScreen> {
                     if (_idealWeightMin > 0) ...[
                       const SizedBox(height: 12),
                       Text(
-                        'Cân nặng lý tưởng: ${_idealWeightMin.toStringAsFixed(1)} – ${_idealWeightMax.toStringAsFixed(1)} ${_isMetric ? "kg" : "lb"}',
+                        'Ideal weight: ${_idealWeightMin.toStringAsFixed(1)} – ${_idealWeightMax.toStringAsFixed(1)} ${_isMetric ? "kg" : "lb"}',
                         style: TextStyle(fontSize: 13, color: color, fontWeight: FontWeight.w600),
                       ),
                     ],
@@ -270,11 +270,11 @@ class _BmiScale extends StatelessWidget {
 
 class _BmiReferenceTable extends StatelessWidget {
   final List<List<String>> _rows = const [
-    ['< 18.5', 'Thiếu cân', '🔵'],
-    ['18.5 – 24.9', 'Bình thường', '🟢'],
-    ['25 – 29.9', 'Thừa cân', '🟠'],
-    ['30 – 34.9', 'Béo phì độ I', '🔴'],
-    ['≥ 35', 'Béo phì độ II+', '🔴'],
+    ['< 18.5', 'Underweight', '🔵'],
+    ['18.5 – 24.9', 'Normal', '🟢'],
+    ['25 – 29.9', 'Overweight', '🟠'],
+    ['30 – 34.9', 'Obese Class I', '🔴'],
+    ['≥ 35', 'Obese Class II+', '🔴'],
   ];
 
   @override
@@ -289,7 +289,7 @@ class _BmiReferenceTable extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Bảng phân loại BMI', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14)),
+          const Text('BMI classification table', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14)),
           const SizedBox(height: 12),
           ..._rows.map((r) => Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5),

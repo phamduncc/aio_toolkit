@@ -31,7 +31,7 @@ class _RandomScreenState extends State<RandomScreen>
   Widget build(BuildContext context) {
     final color = AppTheme.toolColors['random']!;
     return ToolScaffold(
-      title: 'Số ngẫu nhiên',
+      title: 'Random',
       color: color,
       icon: Icons.casino_rounded,
       child: Column(
@@ -44,9 +44,9 @@ class _RandomScreenState extends State<RandomScreen>
             labelStyle:
                 const TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
             tabs: const [
-              Tab(text: 'Random số'),
-              Tab(text: 'Xúc xắc'),
-              Tab(text: 'Chọn ngẫu nhiên'),
+              Tab(text: 'Numbers'),
+              Tab(text: 'Dice'),
+              Tab(text: 'Pick from list'),
             ],
           ),
           Expanded(
@@ -106,7 +106,7 @@ class _RandomNumberTabState extends State<_RandomNumberTab> {
                       child: TextField(
                         controller: _minCtrl,
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(labelText: 'Từ'),
+                        decoration: const InputDecoration(labelText: 'From'),
                       ),
                     ),
                     const Padding(
@@ -119,7 +119,7 @@ class _RandomNumberTabState extends State<_RandomNumberTab> {
                       child: TextField(
                         controller: _maxCtrl,
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(labelText: 'Đến'),
+                        decoration: const InputDecoration(labelText: 'To'),
                       ),
                     ),
                   ],
@@ -127,7 +127,7 @@ class _RandomNumberTabState extends State<_RandomNumberTab> {
                 const SizedBox(height: 16),
                 Row(
                   children: [
-                    const Text('Số lượng:',
+                    const Text('Count:',
                         style: TextStyle(fontWeight: FontWeight.w600)),
                     const Spacer(),
                     _SmallStepBtn(
@@ -156,7 +156,7 @@ class _RandomNumberTabState extends State<_RandomNumberTab> {
                   child: ElevatedButton.icon(
                     onPressed: _generate,
                     icon: const Icon(Icons.casino_rounded),
-                    label: const Text('Tạo số ngẫu nhiên'),
+                    label: const Text('Generate random numbers'),
                     style: ElevatedButton.styleFrom(backgroundColor: color),
                   ),
                 ),
@@ -212,7 +212,7 @@ class _RandomNumberTabState extends State<_RandomNumberTab> {
                           ClipboardData(text: _results.join(', ')));
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                            content: Text('Đã sao chép!'),
+                            content: Text('Copied!'),
                             duration: Duration(seconds: 1)),
                       );
                     },
@@ -222,7 +222,7 @@ class _RandomNumberTabState extends State<_RandomNumberTab> {
                         Icon(Icons.copy_rounded,
                             size: 14, color: color.withAlpha(150)),
                         const SizedBox(width: 4),
-                        Text('Sao chép',
+                        Text('Copy',
                             style: TextStyle(
                                 fontSize: 12, color: color.withAlpha(150))),
                       ],
@@ -272,7 +272,7 @@ class _DiceTabState extends State<_DiceTab> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Số mặt:',
+                    const Text('Sides:',
                         style: TextStyle(fontWeight: FontWeight.w600)),
                     Wrap(
                       spacing: 8,
@@ -310,7 +310,7 @@ class _DiceTabState extends State<_DiceTab> {
                 const SizedBox(height: 16),
                 Row(
                   children: [
-                    const Text('Số xúc xắc:',
+                    const Text('Number of dice:',
                         style: TextStyle(fontWeight: FontWeight.w600)),
                     const Spacer(),
                     _SmallStepBtn(
@@ -376,7 +376,7 @@ class _DiceTabState extends State<_DiceTab> {
                   ),
                   const SizedBox(height: 16),
                   if (_dice.length > 1)
-                    Text('Tổng: $total',
+                    Text('Total: $total',
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
@@ -394,7 +394,7 @@ class _DiceTabState extends State<_DiceTab> {
                       children: [
                         Icon(Icons.touch_app_rounded, color: color, size: 16),
                         const SizedBox(width: 6),
-                        Text('Chạm để tung xúc xắc',
+                        Text('Tap to roll dice',
                             style: TextStyle(
                                 color: color,
                                 fontSize: 13,
@@ -453,7 +453,7 @@ class _PickRandomTabState extends State<_PickRandomTab> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                    'Nhập danh sách (phân cách bằng dấu phẩy hoặc xuống dòng)',
+                    'Enter a list (comma or newline separated)',
                     style:
                         TextStyle(fontSize: 13, color: AppTheme.textSecondary)),
                 const SizedBox(height: 10),
@@ -462,13 +462,13 @@ class _PickRandomTabState extends State<_PickRandomTab> {
                   maxLines: 4,
                   onChanged: (_) => _parse(),
                   decoration: const InputDecoration(
-                    hintText: 'An, Bình, Châu, Dũng...',
+                    hintText: 'Alice, Bob, Charlie, David...',
                     alignLabelWithHint: true,
                   ),
                 ),
                 const SizedBox(height: 12),
                 if (_items.isNotEmpty)
-                  Text('${_items.length} mục',
+                  Text('${_items.length} items',
                       style: TextStyle(
                           fontSize: 13,
                           color: color,
@@ -479,7 +479,7 @@ class _PickRandomTabState extends State<_PickRandomTab> {
                   child: ElevatedButton.icon(
                     onPressed: _items.isNotEmpty ? _pick : null,
                     icon: const Icon(Icons.shuffle_rounded),
-                    label: const Text('Chọn ngẫu nhiên'),
+                    label: const Text('Pick randomly'),
                     style: ElevatedButton.styleFrom(backgroundColor: color),
                   ),
                 ),
@@ -514,7 +514,7 @@ class _PickRandomTabState extends State<_PickRandomTab> {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 8),
-                  const Text('Được chọn!',
+                  const Text('Selected!',
                       style: TextStyle(
                           color: AppTheme.textSecondary, fontSize: 13)),
                 ],

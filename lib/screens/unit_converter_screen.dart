@@ -28,7 +28,7 @@ class _UnitConverterScreenState extends State<UnitConverterScreen>
   @override
   Widget build(BuildContext context) {
     return ToolScaffold(
-      title: 'Đổi đơn vị',
+      title: 'Unit Converter',
       color: AppTheme.toolColors['converter']!,
       icon: Icons.swap_horiz_rounded,
       child: Column(
@@ -42,12 +42,12 @@ class _UnitConverterScreenState extends State<UnitConverterScreen>
             unselectedLabelColor: AppTheme.textSecondary,
             labelStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
             tabs: const [
-              Tab(text: 'Khối lượng'),
-              Tab(text: 'Chiều dài'),
-              Tab(text: 'Nhiệt độ'),
-              Tab(text: 'Diện tích'),
-              Tab(text: 'Thể tích'),
-              Tab(text: 'Tiền tệ'),
+              Tab(text: 'Mass'),
+              Tab(text: 'Length'),
+              Tab(text: 'Temperature'),
+              Tab(text: 'Area'),
+              Tab(text: 'Volume'),
+              Tab(text: 'Currency'),
             ],
           ),
           Expanded(
@@ -84,7 +84,7 @@ class _ConverterTabState extends State<_ConverterTab> {
   double? _result;
 
   static const Map<String, List<String>> _units = {
-    'weight': ['kg', 'g', 'mg', 'lb', 'oz', 'tấn'],
+    'weight': ['kg', 'g', 'mg', 'lb', 'oz', 'ton'],
     'length': ['m', 'km', 'cm', 'mm', 'inch', 'ft', 'yard', 'mile'],
     'temperature': ['°C', '°F', 'K'],
     'area': ['m²', 'km²', 'cm²', 'ha', 'ft²', 'acre'],
@@ -133,7 +133,7 @@ class _ConverterTabState extends State<_ConverterTab> {
           case 'mg': return 0.000001;
           case 'lb': return 0.453592;
           case 'oz': return 0.0283495;
-          case 'tấn': return 1000;
+          case 'ton': return 1000;
         }
       case 'length':
         switch (unit) {
@@ -231,7 +231,7 @@ class _ConverterTabState extends State<_ConverterTab> {
             child: Column(
               children: [
                 _UnitRow(
-                  label: 'Từ',
+                  label: 'From',
                   units: units,
                   selected: _fromUnit,
                   onChanged: (v) { setState(() { _fromUnit = v!; _calculate(); }); },
@@ -253,7 +253,7 @@ class _ConverterTabState extends State<_ConverterTab> {
                 ),
                 const SizedBox(height: 12),
                 _UnitRow(
-                  label: 'Sang',
+                  label: 'To',
                   units: units,
                   selected: _toUnit,
                   onChanged: (v) { setState(() { _toUnit = v!; _calculate(); }); },
@@ -294,7 +294,7 @@ class _ConverterTabState extends State<_ConverterTab> {
                 setState(() => _result = null);
               },
               icon: const Icon(Icons.clear_rounded, size: 18),
-              label: const Text('Xóa'),
+              label: const Text('Clear'),
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppTheme.textSecondary,
                 side: BorderSide(color: Colors.grey.shade300),

@@ -27,7 +27,7 @@ class _CounterScreenState extends State<CounterScreen> {
     setState(() {
       _counters = raw.map((s) => _CounterItem.fromJson(jsonDecode(s))).toList();
       if (_counters.isEmpty) {
-        _counters = [_CounterItem(name: 'Bộ đếm 1', value: 0, step: 1)];
+        _counters = [_CounterItem(name: 'Counter 1', value: 0, step: 1)];
       }
     });
   }
@@ -73,7 +73,7 @@ class _CounterScreenState extends State<CounterScreen> {
   @override
   Widget build(BuildContext context) {
     return ToolScaffold(
-      title: 'Đếm số',
+      title: 'Counter',
       color: color,
       icon: Icons.add_circle_outline_rounded,
       child: Column(
@@ -86,7 +86,7 @@ class _CounterScreenState extends State<CounterScreen> {
                       children: [
                         Icon(Icons.add_circle_outline_rounded, size: 64, color: color.withAlpha(80)),
                         const SizedBox(height: 16),
-                        const Text('Chưa có bộ đếm nào', style: TextStyle(color: AppTheme.textSecondary)),
+                        const Text('No counters yet', style: TextStyle(color: AppTheme.textSecondary)),
                       ],
                     ),
                   )
@@ -118,7 +118,7 @@ class _CounterScreenState extends State<CounterScreen> {
               child: ElevatedButton.icon(
                 onPressed: _add,
                 icon: const Icon(Icons.add_rounded),
-                label: const Text('Thêm bộ đếm'),
+                label: const Text('Add counter'),
               ),
             ),
           ),
@@ -178,7 +178,7 @@ class _CounterCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(item.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
-                      Text('Bước: ${item.step}', style: const TextStyle(fontSize: 12, color: AppTheme.textSecondary)),
+                      Text('Step: ${item.step}', style: const TextStyle(fontSize: 12, color: AppTheme.textSecondary)),
                     ],
                   ),
                 ),
@@ -280,32 +280,32 @@ class _AddCounterDialogState extends State<_AddCounterDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      title: Text(widget.initialName != null ? 'Sửa bộ đếm' : 'Thêm bộ đếm'),
+      title: Text(widget.initialName != null ? 'Edit counter' : 'Add counter'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           TextField(
             controller: _nameCtrl,
-            decoration: const InputDecoration(labelText: 'Tên bộ đếm'),
+            decoration: const InputDecoration(labelText: 'Counter name'),
           ),
           const SizedBox(height: 12),
           TextField(
             controller: _stepCtrl,
             keyboardType: TextInputType.number,
-            decoration: const InputDecoration(labelText: 'Bước đếm', hintText: '1'),
+            decoration: const InputDecoration(labelText: 'Step size', hintText: '1'),
           ),
         ],
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: const Text('Huỷ')),
+        TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
         ElevatedButton(
           onPressed: () {
-            final name = _nameCtrl.text.trim().isEmpty ? 'Bộ đếm' : _nameCtrl.text.trim();
+            final name = _nameCtrl.text.trim().isEmpty ? 'Counter' : _nameCtrl.text.trim();
             final step = int.tryParse(_stepCtrl.text) ?? 1;
             widget.onAdd(name, step.abs().clamp(1, 9999));
             Navigator.pop(context);
           },
-          child: const Text('Xong'),
+          child: const Text('Done'),
         ),
       ],
     );

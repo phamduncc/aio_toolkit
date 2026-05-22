@@ -29,7 +29,7 @@ class _PercentageScreenState extends State<PercentageScreen>
   Widget build(BuildContext context) {
     final color = AppTheme.toolColors['percentage']!;
     return ToolScaffold(
-      title: 'Phần trăm',
+      title: 'Percentage',
       color: color,
       icon: Icons.percent_rounded,
       child: Column(
@@ -42,9 +42,9 @@ class _PercentageScreenState extends State<PercentageScreen>
             labelStyle:
                 const TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
             tabs: const [
-              Tab(text: 'X% của Y'),
-              Tab(text: 'Tăng/giảm %'),
-              Tab(text: 'So sánh'),
+              Tab(text: 'X% of Y'),
+              Tab(text: 'Increase/decrease'),
+              Tab(text: 'Compare'),
             ],
           ),
           Expanded(
@@ -83,7 +83,7 @@ class _PercentOfTabState extends State<_PercentOfTab> {
       return;
     }
     final r = p / 100 * v;
-    setState(() => _result = '${_fmt(p)}% của ${_fmt(v)} = ${_fmt(r)}');
+    setState(() => _result = '${_fmt(p)}% of ${_fmt(v)} = ${_fmt(r)}');
   }
 
   String _fmt(double v) => v == v.truncateToDouble()
@@ -104,7 +104,7 @@ class _PercentOfTabState extends State<_PercentOfTab> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Tính X% của Y',
+                const Text('Calculate X% of Y',
                     style:
                         TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
                 const SizedBox(height: 16),
@@ -117,12 +117,12 @@ class _PercentOfTabState extends State<_PercentOfTab> {
                             decimal: true),
                         onChanged: (_) => _calc(),
                         decoration: const InputDecoration(
-                            labelText: 'X (phần trăm)', suffixText: '%'),
+                            labelText: 'X (percent)', suffixText: '%'),
                       ),
                     ),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 12),
-                      child: Text('của',
+                      child: Text('of',
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
                               color: AppTheme.textSecondary)),
@@ -134,14 +134,14 @@ class _PercentOfTabState extends State<_PercentOfTab> {
                             decimal: true),
                         onChanged: (_) => _calc(),
                         decoration:
-                            const InputDecoration(labelText: 'Y (giá trị)'),
+                            const InputDecoration(labelText: 'Y (value)'),
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 16),
                 if (_result != null)
-                  ResultCard(result: _result!, color: color, label: 'Kết quả'),
+                  ResultCard(result: _result!, color: color, label: 'Result'),
               ],
             ),
           ),
@@ -150,16 +150,16 @@ class _PercentOfTabState extends State<_PercentOfTab> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Ví dụ nhanh',
+                const Text('Quick examples',
                     style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 14,
                         color: AppTheme.textSecondary)),
                 const SizedBox(height: 10),
                 ...[
-                  ['10% của 500', '= 50'],
-                  ['20% của 250', '= 50'],
-                  ['15% của 200', '= 30'],
+                  ['10% of 500', '= 50'],
+                  ['20% of 250', '= 50'],
+                  ['15% of 200', '= 30'],
                 ].map((e) => Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4),
                       child: Row(
@@ -225,7 +225,7 @@ class _PercentChangeTabState extends State<_PercentChangeTab> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Tính tỷ lệ tăng/giảm',
+                const Text('Calculate percent change',
                     style:
                         TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
                 const SizedBox(height: 16),
@@ -238,7 +238,7 @@ class _PercentChangeTabState extends State<_PercentChangeTab> {
                             decimal: true),
                         onChanged: (_) => _calc(),
                         decoration:
-                            const InputDecoration(labelText: 'Giá trị ban đầu'),
+                            const InputDecoration(labelText: 'Original value'),
                       ),
                     ),
                     const Padding(
@@ -253,7 +253,7 @@ class _PercentChangeTabState extends State<_PercentChangeTab> {
                             decimal: true),
                         onChanged: (_) => _calc(),
                         decoration:
-                            const InputDecoration(labelText: 'Giá trị sau'),
+                            const InputDecoration(labelText: 'New value'),
                       ),
                     ),
                   ],
@@ -293,7 +293,7 @@ class _PercentChangeTabState extends State<_PercentChangeTab> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          _isIncrease! ? 'Tăng' : 'Giảm',
+                          _isIncrease! ? 'Increase' : 'Decrease',
                           style: TextStyle(
                             fontSize: 14,
                             color: _isIncrease! ? Colors.green : Colors.red,
@@ -319,7 +319,7 @@ class _PercentChangeTabState extends State<_PercentChangeTab> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Tính giá trị sau khi tăng/giảm %',
+                const Text('Value after increase/decrease %',
                     style:
                         TextStyle(fontWeight: FontWeight.w700, fontSize: 14)),
                 const SizedBox(height: 12),
@@ -375,7 +375,7 @@ class _QuickPercentAdjustState extends State<_QuickPercentAdjust> {
                     const TextInputType.numberWithOptions(decimal: true),
                 onChanged: (_) => _calc(),
                 decoration:
-                    const InputDecoration(labelText: 'Giá trị', isDense: true),
+                    const InputDecoration(labelText: 'Value', isDense: true),
               ),
             ),
             const SizedBox(width: 10),
@@ -386,7 +386,7 @@ class _QuickPercentAdjustState extends State<_QuickPercentAdjust> {
                     const TextInputType.numberWithOptions(decimal: true),
                 onChanged: (_) => _calc(),
                 decoration: const InputDecoration(
-                    labelText: 'Phần trăm', suffixText: '%', isDense: true),
+                    labelText: 'Percent', suffixText: '%', isDense: true),
               ),
             ),
           ],
@@ -403,7 +403,7 @@ class _QuickPercentAdjustState extends State<_QuickPercentAdjust> {
                       borderRadius: BorderRadius.circular(10)),
                   child: Column(
                     children: [
-                      const Text('Sau khi tăng',
+                      const Text('After increase',
                           style: TextStyle(fontSize: 11, color: Colors.green)),
                       Text(_incResult!,
                           style: const TextStyle(
@@ -423,7 +423,7 @@ class _QuickPercentAdjustState extends State<_QuickPercentAdjust> {
                       borderRadius: BorderRadius.circular(10)),
                   child: Column(
                     children: [
-                      const Text('Sau khi giảm',
+                      const Text('After decrease',
                           style: TextStyle(fontSize: 11, color: Colors.red)),
                       Text(_decResult!,
                           style: const TextStyle(
@@ -471,10 +471,10 @@ class _PercentCompareTabState extends State<_PercentCompareTab> {
     final pct = diff / b * 100;
     setState(() {
       _result = a > b
-          ? 'A lớn hơn B ${pct.toStringAsFixed(2)}%'
+          ? 'A is ${pct.toStringAsFixed(2)}% greater than B'
           : a < b
-              ? 'A nhỏ hơn B ${pct.toStringAsFixed(2)}%'
-              : 'A bằng B';
+              ? 'A is ${pct.toStringAsFixed(2)}% less than B'
+              : 'A equals B';
       _aOfB = a != 0 ? '${(b / a * 100).toStringAsFixed(2)}%' : null;
       _bOfA = '${(a / b * 100).toStringAsFixed(2)}%';
     });
@@ -489,7 +489,7 @@ class _PercentCompareTabState extends State<_PercentCompareTab> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('So sánh 2 giá trị',
+            const Text('Compare two values',
                 style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
             const SizedBox(height: 16),
             Row(
@@ -500,7 +500,7 @@ class _PercentCompareTabState extends State<_PercentCompareTab> {
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),
                     onChanged: (_) => _calc(),
-                    decoration: const InputDecoration(labelText: 'Giá trị A'),
+                    decoration: const InputDecoration(labelText: 'Value A'),
                   ),
                 ),
                 const Padding(
@@ -517,7 +517,7 @@ class _PercentCompareTabState extends State<_PercentCompareTab> {
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),
                     onChanged: (_) => _calc(),
-                    decoration: const InputDecoration(labelText: 'Giá trị B'),
+                    decoration: const InputDecoration(labelText: 'Value B'),
                   ),
                 ),
               ],
@@ -537,7 +537,7 @@ class _PercentCompareTabState extends State<_PercentCompareTab> {
                             borderRadius: BorderRadius.circular(10)),
                         child: Column(
                           children: [
-                            Text('B là $_aOfB của A',
+                            Text('B is $_aOfB of A',
                                 style: TextStyle(fontSize: 12, color: color)),
                           ],
                         ),
@@ -553,7 +553,7 @@ class _PercentCompareTabState extends State<_PercentCompareTab> {
                             borderRadius: BorderRadius.circular(10)),
                         child: Column(
                           children: [
-                            Text('A là $_bOfA của B',
+                            Text('A is $_bOfA of B',
                                 style: TextStyle(fontSize: 12, color: color)),
                           ],
                         ),
